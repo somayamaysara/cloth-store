@@ -1,39 +1,68 @@
-// import { Link } from "react-router-dom";
-// import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useCart } from '../component/CartContext';
 
-// export function CartPage({ id }) { // حذفنا البروبس الزائدة واكتفينا بالـ id
-//     const [product, setProduct] = useState(null);
+export default function Card() {
+    const { cart, removeFromCart } = useCart();
 
-//     useEffect(() => {
-//         fetch("https://fakestoreapi.com/products?limit=10") 
-//         .then((res) => res.json())
-//         .then((resJson) => {
-//             setProduct(resJson.find((p) => p.id === id));
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-//     }, [id]); // إضافة id كـ dependency لضمان التحديث عند تغيره
+    const calculateTotal = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    };
 
-//     return (
-//         <div className="col">
-//             {/* التعديل هنا: ربط الكارد بصفحة المنتج بناءً على الـ id */}
-//             <Link to={`/product/${id}`} className="text-decoration-none text-dark">
-//                 <div className="card border-0 rounded-0 h-100" style={{ cursor: 'pointer' }}>
-//                     <div className="overflow-hidden bg-light p-3" style={{ height: '260px' }}>
-//                         <img 
-//                             className="card-img-top w-100 h-100" 
-//                             src={product?.image} 
-//                             alt={product?.title} 
-//                             style={{ objectFit: 'contain', transition: 'transform 0.3s ease' }}
-//                         />
-//                     </div>
-//                     <div className="card-body px-0 pt-3 pb-0">
-//                         <p className="text-dark mb-1 text-truncate" style={{ fontSize: '13px' }}>{product?.title}</p>
-//                         <p className="fw-bold text-dark mb-0" style={{ fontSize: '14px' }}>${product?.price}</p>
-//                     </div>
-//                 </div>
-//             </Link>
-//         </div>
-//     );
-// }
+    if (cart.length === 0) {
+        return (
+            <div className="container py-5 text-center">
+                <h3>Your Cart is Empty</h3>
+            </div>
+        );
+    }
+
+    return (
+        <div className="container py-5">
+            <h2 className="mb-4">Shopping Cart</h2>
+            <div className="row">
+                <div className="col-12 col-md-8">
+                    {cart.map((item, index) => (
+                        <div key={`${item.id}-${item.size}-${index}`} className="d-flex align-items-center justify-content-between border-bottom py-3">
+                            <div className="d-flex align-items-center gap-3">
+                                <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    style={{ width: '70px', height: '70px', objectFit: 'contain' }}
+                                    className="border p-1"
+                                />
+                                <div>
+                                    <h6 className="mb-1">{item.title}</h6>
+                                    <p className="mb-1 text-secondary" style={{ fontSize: '14px' }}>
+                                        Price: <strong>{item.price} SR</strong>
+                                    </p>
+                                    <span className="badge bg-light text-dark border me-2">Size: {item.size}</span>
+                                    <span className="badge bg-light text-dark border">Qty: {item.quantity}</span>
+                                </div>
+                            </div>
+
+                            <button
+                                className="btn btn-sm btn-outline-danger"
+                                onClick={() => removeFromCart(item.id, item.size)}
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="col-12 col-md-4 mt-4 mt-md-0">
+                    <div className="card p-3 bg-light border">
+                        <h5 className="mb-3">Order Summary</h5>
+                        <div className="d-flex justify-content-between mb-2">
+                            <span>Total Price:</span>
+                            <strong>{calculateTotal()} SR</strong>
+                        </div>
+                        <button className="btn btn-dark w-100 text-uppercase mt-3 rounded-0">
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

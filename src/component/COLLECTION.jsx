@@ -57,21 +57,7 @@ export default function COLLECTION() {
                   <input type="checkbox" onChange={() => handleCategoryChange("women's clothing")} /> Women
                 </label>
                 <label className="d-flex align-items-center gap-2 style={{ cursor: 'pointer' }}">
-                  <input type="checkbox" onChange={() => handleCategoryChange("jewelery")} /> Kids
-                </label>
-              </div>
-            </div>
-            <div className="border p-3">
-              <h6 className="fw-bold text-uppercase mb-3" style={{ fontSize: '12px' }}>Type</h6>
-              <div className="d-flex flex-column gap-2" style={{ fontSize: '14px' }}>
-                <label className="d-flex align-items-center gap-2">
-                  <input type="checkbox" /> Topwear
-                </label>
-                <label className="d-flex align-items-center gap-2">
-                  <input type="checkbox" /> Bottomwear
-                </label>
-                <label className="d-flex align-items-center gap-2">
-                  <input type="checkbox" /> Winterwear
+                  <input type="checkbox" onChange={() => handleCategoryChange("jewelery")} /> Accessories
                 </label>
               </div>
             </div>

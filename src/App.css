@@ -58,7 +58,11 @@ margin-left: 300px;
 @media (max-width: 992px) {
     .navbar-nav{
 margin-left: 150px;
-}}
+}
+.nav-style{
+    margin-left: 150px;
+}
+}
 .font-medium {
     font-weight: 500;
 }

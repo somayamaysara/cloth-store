@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // 1. أضفنا استيراد useNavigate هنا
+import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../component/CartContext';
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const navigate = useNavigate(); // 2. تعريف دالة التنقل
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const [selectedSize, setSelectedSize] = useState('');
@@ -15,47 +18,31 @@ export default function ProductDetail() {
       .then((res) => res.json())
       .then((resJson) => {
         setProduct(resJson);
-        setMainImage(resJson.image); 
+        setMainImage(resJson.image);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }, [id]);
 
   const handleImageChange = (e) => {
     setMainImage(e.target.src);
   };
-const handleAddToCart = () => {
-  if (!selectedSize) {
-    alert("Please select a size first!");
-    return;
-  }
 
-  const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
-
-  // البحث عما إذا كان المنتج بنفس المقاس موجوداً مسبقاً
-  const existingItemIndex = currentCart.findIndex(
-    (item) => item.id === product?.id && item.size === selectedSize
-  );
-
-  if (existingItemIndex > -1) {
-    // إذا وجدناه، نزيد الكمية فقط
-    currentCart[existingItemIndex].quantity += 1;
-  } else {
-    // إذا لم يجد، نضيفه كمنتج جديد بكمية = 1
-    currentCart.push({
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert("Please select a size first!");
+      return;
+    }
+    addToCart({
       id: product?.id,
       title: product?.title || "Men Round Neck Pure Cotton T-shirt",
       price: product?.price || 19,
-      image: mainImage,
-      size: selectedSize,
-      quantity: 1
+      image: mainImage, 
+      size: selectedSize
     });
-  }
 
-  localStorage.setItem('cart', JSON.stringify(currentCart));
-  navigate('/card');
-};
+    navigate('/card');
+  };
+
   return (
     <div className="container py-5">
       <div className="row g-4">
@@ -107,10 +94,7 @@ const handleAddToCart = () => {
             {product?.title || "Men Round Neck Pure Cotton T-shirt"}
           </h2>
           <div className="d-flex align-items-center gap-1 mb-4 text-warning" style={{ fontSize: '18px' }}>
-            <span>★</span>
-            <span>★</span>
-            <span>★</span>
-            <span>★</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span>
             <span className="text-secondary opacity-25">★</span>
             <span className="text-dark ms-2" style={{ fontSize: '14px' }}>({product?.rating?.count || 132})</span>
           </div>
@@ -139,7 +123,6 @@ const handleAddToCart = () => {
             </div>
           </div>
 
-          {/* 4. ربط الدالة الجديدة بالزر عبر onClick */}
           <button 
             type="button"
             onClick={handleAddToCart}

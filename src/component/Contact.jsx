@@ -16,7 +16,7 @@ export default function Contact() {
         <div className="col-12 col-md-5">
           <div className="contactImage text-center">
             <img 
-              src="src/assets/image/contact_img-CyOum2vk.png" // تأكدي من مسار الصورة الصحيح في مجلدكِ
+              src="src/assets/image/contact_img-CyOum2vk.png"
               alt="Contact Us" 
               className="img-fluid w-100" 
               style={{ width: '80%' }}

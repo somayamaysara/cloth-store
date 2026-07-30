@@ -4,7 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-import {Card} from './card'
+import { CartProvider } from './component/CartContext'
 import Nav from './component/nav'
 import Home from './component/Home'
 import COLLECTION from './component/COLLECTION'
@@ -18,7 +18,7 @@ import Footer from './component/Footer'
 import Profile from './component/profile'
 import Login from './component/Login'
 import ProductDetail from './component/Addprodect'
-// import CartPage from './component/CartPage'
+import CartPage from './component/CartPage'
 const router =createBrowserRouter([
   {
     path :"/",
@@ -51,13 +51,16 @@ const router =createBrowserRouter([
   path: "/login",
   element: <Login />,
     },
+     { path: "/Card", element: <CartPage /> }
   ]
   }
 ])
 function App() {
   return (
     <>
-<RouterProvider router={router} />
+<CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
     </>
   )
 }

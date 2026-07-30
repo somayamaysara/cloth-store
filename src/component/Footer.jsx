@@ -1,6 +1,4 @@
 import React from 'react'
-// import { Link } from 'react-router-dom';
-
 export default function Footer() {
 return (
     <div className="pt-5 px-3 px-md-5 mt-auto w-100">
@@ -15,7 +13,7 @@ return (
             </p>
         </div>
         <div className="col-12 col-md-4 ps-5">
-        <p class="text-xl font-medium ">COMPANY</p>
+        <p className="text-xl font-medium ">COMPANY</p>
         <ul className="list-unstyled d-flex flex-column gap-2 small">
             <li>
             Home
@@ -31,7 +29,7 @@ return (
             </li>
         </ul>
         </div><div className="col-12 col-md-4">
-            <p class="text-xl font-medium ">GET IN TOUCH</p>
+            <p className="text-xl font-medium ">GET IN TOUCH</p>
             <ul className="list-unstyled d-flex flex-column gap-2 small">
             <li>
             +84-111-222-333
