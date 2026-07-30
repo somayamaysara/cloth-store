@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider , createHashRouter} from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -19,7 +19,7 @@ import Profile from './component/profile'
 import Login from './component/Login'
 import ProductDetail from './component/Addprodect'
 import CartPage from './component/CartPage'
-const router =createBrowserRouter([
+const router = createHashRouter([
   {
     path :"/",
     element : <Layout/>,
